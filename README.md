@@ -5,4 +5,3 @@
 #### OMICRON NEWS PRINTER
 
 
-test test
