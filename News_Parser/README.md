@@ -23,5 +23,7 @@ Allows you to download 100 headlines of any given topic.
 `python news.py --topic omicron --from 2022-07-20 
 --to 2022-09-20 --source wsj.com --country us --f omicron_variant.pdf`
 
+#### Image
+![Resulting PDF](./images/demo.jpg)
 
 
