@@ -1,18 +1,18 @@
 # A program to keep me updated on Covid-19 Omicron variant
 import requests
+import config
 from fpdf import FPDF
+from argparse import ArgumentParser
 
 
-api_key = "26c72874767c46febdc8bcc4ed570997"
+def get_news(url, filename):
 
-def news():
-    main_url = "https://newsapi.org/v2/everything?q=omicron&apiKey=26c72874767c46febdc8bcc4ed570997"
-    news = requests.get(main_url).json()
+    news = requests.get(url).json()
     # print(news)
-    global articles
+
     articles = news['articles']
     # print(articles)
-    global collection
+
     collection = {}
     n = 1
     for arti in articles:
@@ -22,8 +22,7 @@ def news():
         collection[n] = title, source, link
         n += 1
 
-
-    pdf = FPDF(orientation = "P", unit = "mm", format = "A4")
+    pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.add_page()
     pdf.set_font('helvetica', size=8)
     for n in range(1,len(articles)+1):
@@ -32,7 +31,26 @@ def news():
         pdf.cell(txt="LINK", link=(collection[n][2]), new_x="LEFT", new_y="NEXT")
         pdf.cell(txt=" ", new_x="LEFT", new_y="NEXT")
 
-    pdf.output("COVID-19 OMICRON.pdf")
+    pdf.output(filename)
 
 
-news()
+def file_ext_check(args):
+    f = args.filename
+    return f if f.endswith('.pdf') else f + '.pdf'
+
+
+def get_args():
+    ap = ArgumentParser()
+    ap.add_argument('--url', help='url link')
+    ap.add_argument('--f', help='filename', default='news.pdf')
+    return ap.parse_args()
+
+
+def main():
+    args = get_args()
+    file = file_ext_check(args)
+    get_news(args.url, file)
+
+
+if __name__ == '__main__':
+    main()
