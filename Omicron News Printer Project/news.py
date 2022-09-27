@@ -32,9 +32,7 @@ def get_news(url, filename, args):
     pdf.cell(txt=" ", new_x="LEFT", new_y="NEXT")
     pdf.set_font('times', size=12)
 
-
     for n in range(1, len(articles)+1):
-
         pdf.set_font('times', 'I', size=15)
         # pdf.set_fill_color(200, 220, 255)
         headline = collection[n][0]
@@ -45,11 +43,7 @@ def get_news(url, filename, args):
         pdf.cell(txt=headline, new_x="LEFT", new_y="NEXT", link=URL)
         pdf.set_font('times', 'B', size=10)
         pdf.cell(txt=source_art, new_x="LEFT", new_y="NEXT")
-        # pdf.set_font('times', 'U', size=8)
-        # pdf.cell(txt="READ ME", link=(collection[n][2]), new_x="LEFT", new_y="NEXT")
-        # pdf.set_font('times', size=8)
         pdf.cell(txt=" ", new_x="LEFT", new_y="NEXT")
-
 
     pdf.output(filename)
 
@@ -91,7 +85,7 @@ def get_args():
     ap.add_argument('--topic', help='topic name', default=None)
     ap.add_argument('--source', help='source example: wsj.com', default=None)
     ap.add_argument('--fm', help='from yyyy-mm-dd', default=None)
-    ap.add_argument('--to', help='yyyy-mm-dd', default=None)
+    ap.add_argument('--to', help='to yyyy-mm-dd', default=None)
     ap.add_argument('--country', help='us, sg, uk', default=None)
     ap.add_argument('--f', help='filename', default='news.pdf')
     return ap.parse_args()
@@ -101,7 +95,6 @@ def main():
     args = get_args()
     file = file_ext_check(args)
     url = link_generator(args)
-    print(url)
     get_news(url, file, args)
 
 
